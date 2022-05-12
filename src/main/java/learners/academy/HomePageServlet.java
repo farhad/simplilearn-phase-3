@@ -1,5 +1,7 @@
 package learners.academy;
 
+import learners.academy.config.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,5 +16,9 @@ public class HomePageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         resp.getWriter().print("Learner's Academy Home Page");
+
+        PropertyFileLoader propertyFileLoader = PropertyFileLoader.from(EnvVariableReader.get(Constants.CONFIG_FILE_PATh));
+        DbConnectionConfig dbConnectionConfig = ConfigurationFactory.createDbConnectionConfig(propertyFileLoader);
+
     }
 }
