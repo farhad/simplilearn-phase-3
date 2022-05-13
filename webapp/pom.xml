@@ -85,7 +85,7 @@
                     <server>tomcat</server>
                     <username>war-deployer</username>
                     <password>maven-tomcat-plugin</password>
-                    <path>/learners_academy</path>
+                    <path>/lms</path>
                     <update>true</update>
                 </configuration>
 
