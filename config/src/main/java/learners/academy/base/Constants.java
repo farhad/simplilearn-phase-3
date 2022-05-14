@@ -1,4 +1,4 @@
-package learners.academy.config;
+package learners.academy.base;
 
 public class Constants {
 

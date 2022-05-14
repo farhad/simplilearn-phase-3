@@ -1,5 +1,6 @@
-package learners.academy.config;
+package learners.academy.factory;
 
+import learners.academy.base.AppConfig;
 import lombok.*;
 
 @Getter
@@ -7,9 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class DbConnectionConfig implements AppConfig {
+public class DBConnectionConfig implements AppConfig {
     private String username;
     private String password;
-    private String mysqlPort;
+    private String port;
     private String databaseName;
 }

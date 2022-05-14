@@ -1,6 +1,10 @@
 package learners.academy;
 
-import learners.academy.config.*;
+import learners.academy.base.Constants;
+import learners.academy.factory.ConfigurationFactory;
+import learners.academy.factory.DBConnectionConfig;
+import learners.academy.reader.EnvVariableReader;
+import learners.academy.reader.PropertyFileLoader;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,8 +21,8 @@ public class HomePageServlet extends HttpServlet {
         resp.setContentType("text/html");
         resp.getWriter().print("Learner's Academy Home Page");
 
-        PropertyFileLoader propertyFileLoader = PropertyFileLoader.from(EnvVariableReader.get(Constants.CONFIG_FILE_PATh));
-        DbConnectionConfig dbConnectionConfig = ConfigurationFactory.createDbConnectionConfig(propertyFileLoader);
+        PropertyFileLoader propertyFileLoader = PropertyFileLoader.from(new EnvVariableReader().get(Constants.CONFIG_FILE_PATh));
+        DBConnectionConfig dbConnectionConfig = ConfigurationFactory.createDbConnectionConfig(propertyFileLoader);
 
     }
 }
