@@ -10,8 +10,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>webapp</module>
+        <module>model</module>
         <module>dao</module>
+        <module>webapp</module>
     </modules>
 
     <description>Learner's Academy | Simplilearn Phase 3 Assignment Project</description>
