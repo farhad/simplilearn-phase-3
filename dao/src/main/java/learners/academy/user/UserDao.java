@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -44,22 +45,15 @@ public class UserDao implements Dao<User> {
 
     @Override
     public Optional<User> find(Map<String, String> params) throws DataException {
-        if (params.containsKey(USERNAME) && params.containsKey(PASSWORD)) {
-            var query = new StringBuilder()
-                    .append("SELECT * FROM Users WHERE username =")
-                    .append("'")
-                    .append(params.get(USERNAME))
-                    .append("'")
-                    .append(" AND password =")
-                    .append("'")
-                    .append(params.get(PASSWORD))
-                    .append("'")
-                    .append(";").toString();
+        if (params.get(USERNAME) != null && params.get(PASSWORD) != null) {
+            var query = MessageFormat.format(
+                    "SELECT * FROM Users WHERE username = ''{0}'' AND password = ''{1}''",
+                    params.get(USERNAME),
+                    params.get(PASSWORD));
 
             ResultSet resultSet;
             try {
                 resultSet = connection.createStatement().executeQuery(query);
-
                 Optional<User> user = Optional.empty();
                 while (resultSet.next()) {
                     user = Optional.of(new User(
@@ -75,7 +69,7 @@ public class UserDao implements Dao<User> {
                 return user;
 
             } catch (SQLException e) {
-                throw DataException.of(e.getMessage());
+                throw new DataException(e);
             }
         }
 

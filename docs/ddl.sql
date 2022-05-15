@@ -4,11 +4,11 @@ create database learners_academy;
 use learners_academy;
 
 create table Users(
-                      id INT auto_increment,
-                      first_name varchar(50),
-                      last_name varchar(50),
-                      user_name varchar(120),
-                      pass_word varchar(30),
+                      id            INT auto_increment,
+                      first_name    varchar(50),
+                      last_name     varchar(50),
+                      username      varchar(120),
+                      password      varchar(30),
                       assigned_role varchar(20),
                       primary key (id)
 );
