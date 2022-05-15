@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static learners.academy.user.UserConsts.*;
+import static learners.academy.user.UserKeys.*;
 
 @RequiredArgsConstructor
 public class UserDao implements Dao<User> {
