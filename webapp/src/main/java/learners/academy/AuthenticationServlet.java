@@ -33,12 +33,14 @@ public class AuthenticationServlet extends HttpServlet {
         var username = req.getParameter("username");
         var password = req.getParameter("password");
 
-        if (username == null) {
-            req.setAttribute("error", "username is empty");
-            req.getRequestDispatcher("auth").forward(req, resp);
-        } else if (password == null) {
-            req.setAttribute("error", "password is empty");
-            req.getRequestDispatcher("auth").forward(req, resp);
+        req.setAttribute("username", username);
+
+        if (username == null || username.equals("")) {
+            req.setAttribute("error_username", "username is empty");
+            req.getRequestDispatcher("auth.jsp").forward(req, resp);
+        } else if (password == null || password.equals("")) {
+            req.setAttribute("error_password", "password is empty");
+            req.getRequestDispatcher("auth.jsp").forward(req, resp);
         } else {
 
             PropertyFileLoader propertyFileLoader = PropertyFileLoader.from(new EnvVariableReader().get(ConfigKeys.CONFIG_FILE_PATH));
@@ -53,14 +55,14 @@ public class AuthenticationServlet extends HttpServlet {
                     if (user.isPresent()) {
                         if (user.get().getUserName().equals(username) && user.get().getPassword().equals(password)) {
                             req.getSession().setAttribute("session_id", "1");
-                            resp.sendRedirect("dashboard");
+                            resp.sendRedirect("teacher.jsp");
                         } else {
-                            req.setAttribute("error", "invalid username or password");
-                            req.getRequestDispatcher("auth").forward(req, resp);
+                            req.setAttribute("error_auth", "invalid username or password");
+                            req.getRequestDispatcher("auth.jsp").forward(req, resp);
                         }
                     } else {
-                        req.setAttribute("error", "invalid username or password");
-                        req.getRequestDispatcher("auth").forward(req, resp);
+                        req.setAttribute("error_auth", "invalid username or password");
+                        req.getRequestDispatcher("auth.jsp").forward(req, resp);
                     }
                     connection.get().close();
                 } catch (Exception exception) {
@@ -71,8 +73,8 @@ public class AuthenticationServlet extends HttpServlet {
                     }
                 }
             } else {
-                req.setAttribute("error", "cannot access database");
-                req.getRequestDispatcher("auth").forward(req, resp);
+                req.setAttribute("error_auth", "cannot access database");
+                req.getRequestDispatcher("auth.jsp").forward(req, resp);
             }
         }
     }

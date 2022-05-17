@@ -10,26 +10,39 @@
         }
     </style>
 </head>
-<body style="background-color: darkgray;">
+<body style="background-color: lightgray;">
 <center>
     <div style="margin-top: 50px;">
         <h2>Learners Academy | Authentication</h2>
         <form action="auth" method="post">
             <table>
                 <tr>
+                    <%
+                        String populatedUsername = request.getAttribute("username") != null ? request.getAttribute("username").toString() : "";
+                    %>
                     <td>username:</td>
-                    <td><input type="text" name="username" placeholder="username" class="form-control"></td>
+                    <td><input type="text" name="username" placeholder="username" class="form-control" required
+                               value=<%= populatedUsername%>></td>
                 </tr>
                 <tr>
                     <td>password:</td>
-                    <td><input type="password" name="password" placeholder="password" class="form-control"></td>
+                    <td><input type="password" name="password" placeholder="password" class="form-control" required>
+                    </td>
+
                 </tr>
                 <tr>
-                    <td colspan="4" style="text-align: center"><input type="submit" value="Login"
+                    <td colspan="4" style="text-align: center"><input type="submit" value="Sign in"
                                                                       class="btn btn-success"></td>
                 </tr>
             </table>
         </form>
+
+        <table>
+            <tr>
+                <td><%= request.getAttribute("error_auth") != null ? request.getAttribute("error_auth") : "" %>
+                </td>
+            </tr>
+        </table>
     </div>
 </center>
 
