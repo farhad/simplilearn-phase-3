@@ -25,4 +25,28 @@ public class TeacherController implements ITeacherController, Serializable {
             return new ViewState<>(e.getMessage(), new ArrayList<>());
         }
     }
+
+    @Override
+    public ViewState<Teacher> addTeacher(Teacher teacher) {
+        try {
+            var rowsAffected = dao.insert(teacher);
+            String message = null;
+            if (rowsAffected == 0) {
+                message = "failed to insert teacher object";
+            }
+            return new ViewState<>(message, new ArrayList<>());
+        } catch (DataException e) {
+            return new ViewState<>(e.getMessage(), new ArrayList<>());
+        }
+    }
+
+    @Override
+    public ViewState<Teacher> updateTeacher(Teacher teacher) {
+        return null;
+    }
+
+    @Override
+    public ViewState<Teacher> deleteTeacher(Teacher teacher) {
+        return null;
+    }
 }

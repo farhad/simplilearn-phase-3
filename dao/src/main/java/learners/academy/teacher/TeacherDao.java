@@ -8,6 +8,7 @@ import learners.academy.connector.IDataSourceConnector;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class TeacherDao implements IDao<Teacher> {
     @Override
     public List<Teacher> getAll() throws DataException {
         try (var connection = dataSourceConnector.connect()) {
-            var query = "SELECT * FROM Teachers ORDER BY last_name, first_name ASC";
+            var query = "SELECT * FROM Teachers ORDER BY id DESC;";
             var resultSet = connection.createStatement().executeQuery(query);
             var teachers = new ArrayList<Teacher>();
             while (resultSet.next()) {
@@ -48,7 +49,16 @@ public class TeacherDao implements IDao<Teacher> {
 
     @Override
     public int insert(Teacher row) throws DataException {
-        return 0;
+        try (var connection = dataSourceConnector.connect()) {
+            var query = "INSERT INTO Teachers(first_name, last_name, bio) VALUES(?,?,?);";
+            var statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, row.getFirstName());
+            statement.setString(2, row.getLastName());
+            statement.setString(3, row.getBio());
+            return statement.executeUpdate();
+        } catch (Exception exception) {
+            throw new DataException(exception);
+        }
     }
 
     @Override

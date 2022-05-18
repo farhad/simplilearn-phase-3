@@ -23,8 +23,8 @@
         <h3 class="text-center">Teachers</h3>
         <hr>
         <div class="container text-left">
-
-            <a href="<%=request.getContextPath()%>/teachers/add" class="btn btn-success">Add New Teacher</a>
+            <a href="${requestScope['javax.servlet.forward.request_uri']}/add" class="btn btn-success">Add New
+                Teacher</a>
         </div>
         <br>
         <table class="table table-bordered">
@@ -39,26 +39,16 @@
             </thead>
             <tbody>
             <c:forEach var="teacher" items="${teachersList}">
-
                 <tr>
-                    <td>
-                        <c:out value="${teacher.id}"/>
-                    </td>
-                    <td>
-                        <c:out value="${teacher.firstName}"/>
-                    </td>
-                    <td>
-                        <c:out value="${teacher.lastName}"/>
-                    </td>
-                    <td>
-                        <c:out value="${teacher.bio}"/>
-                    </td>
-                    <td><a href="edit?id=<c:out value='${teacher.id}' />">Edit</a> &nbsp;&nbsp;&nbsp;&nbsp; <a
-                            href="delete?id=<c:out value='${teacher.id}' />">Delete</a></td>
+                    <td><c:out value="${teacher.id}"/></td>
+                    <td><c:out value="${teacher.firstName}"/></td>
+                    <td><c:out value="${teacher.lastName}"/></td>
+                    <td><c:out value="${teacher.bio}"/></td>
+                    <td><a href="edit?id=<c:out value='${teacher.id}' />">Edit</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="delete?id=<c:out value='${teacher.id}' />">Delete</a></td>
                 </tr>
             </c:forEach>
             </tbody>
-
         </table>
     </div>
 </div>
