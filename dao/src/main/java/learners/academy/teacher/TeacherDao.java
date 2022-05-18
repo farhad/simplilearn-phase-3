@@ -73,7 +73,14 @@ public class TeacherDao implements IDao<Teacher> {
 
     @Override
     public int delete(long id) throws DataException {
-        return 0;
+        try (var connection = dataSourceConnector.connect()) {
+            var query = "DELETE FROM Teachers WHERE id = ?;";
+            var statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement.setLong(1, id);
+            return statement.executeUpdate();
+        } catch (Exception exception) {
+            throw new DataException(exception);
+        }
     }
 
     @Override

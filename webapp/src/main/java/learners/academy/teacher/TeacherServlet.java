@@ -53,7 +53,7 @@ public class TeacherServlet extends HttpServlet {
             }
 
             case "/teacher/delete": {
-                displayDeleteTeacherConfirm(req, resp);
+                deleteTeacherAndUpdateTeacherList(req, resp);
                 break;
             }
         }
@@ -64,35 +64,34 @@ public class TeacherServlet extends HttpServlet {
     }
 
     private void displayEditTeacherPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        var teacher = Teacher.builder()
-                .id(req.getParameter(TeacherKeys.ID))
-                .firstName(req.getParameter(TeacherKeys.FIRST_NAME))
-                .lastName(req.getParameter(TeacherKeys.LAST_NAME))
-                .bio(req.getParameter(TeacherKeys.BIO)).build();
-
+        var teacher = buildFromRequest(req);
         req.setAttribute(ATTR_TEACHER, teacher);
         req.getRequestDispatcher("/teacher_update.jsp").forward(req, resp);
     }
 
-    private void displayDeleteTeacherConfirm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void deleteTeacherAndUpdateTeacherList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        var teacher = buildFromRequest(req);
 
+        if (!StringUtils.isEmptyOrWhitespaceOnly(req.getParameter(TeacherKeys.ID))) {
+            req.setAttribute(ATTR_SAVE_ERROR, controller.deleteTeacher(teacher).getErrorMessage());
+        }
+
+        var listViewState = controller.getTeachersList();
+        req.setAttribute(ATTR_FETCH_ERROR, listViewState.getErrorMessage());
+        req.setAttribute(ATTR_TEACHERS_LIST, listViewState.getData());
+        resp.sendRedirect(req.getContextPath());
     }
 
     private void saveTeacherAndUpdateTeachersList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        var teacher = Teacher.builder()
-                .id(req.getParameter(TeacherKeys.ID))
-                .firstName(req.getParameter(TeacherKeys.FIRST_NAME))
-                .lastName(req.getParameter(TeacherKeys.LAST_NAME))
-                .bio(req.getParameter(TeacherKeys.BIO))
-                .build();
+        var teacher = buildFromRequest(req);
 
         if (StringUtils.isEmptyOrWhitespaceOnly(req.getParameter(TeacherKeys.ID))) {
-            var saveViewState = controller.addTeacher(teacher);
-            req.setAttribute(ATTR_SAVE_ERROR, saveViewState.getErrorMessage());
+            req.setAttribute(ATTR_SAVE_ERROR, controller.addTeacher(teacher).getErrorMessage());
         } else {
-            var saveViewState = controller.updateTeacher(teacher);
-            req.setAttribute(ATTR_SAVE_ERROR, saveViewState.getErrorMessage());
+            req.setAttribute(ATTR_SAVE_ERROR, controller.updateTeacher(teacher).getErrorMessage());
         }
+
+        req.removeAttribute(ATTR_TEACHER);
 
         var listViewState = controller.getTeachersList();
         req.setAttribute(ATTR_FETCH_ERROR, listViewState.getErrorMessage());
@@ -105,5 +104,14 @@ public class TeacherServlet extends HttpServlet {
         req.setAttribute(ATTR_FETCH_ERROR, viewState.getErrorMessage());
         req.setAttribute(ATTR_TEACHERS_LIST, viewState.getData());
         req.getRequestDispatcher("/teacher.jsp").forward(req, resp);
+    }
+
+    private Teacher buildFromRequest(HttpServletRequest req) {
+        return Teacher.builder()
+                .id(req.getParameter(TeacherKeys.ID))
+                .firstName(req.getParameter(TeacherKeys.FIRST_NAME))
+                .lastName(req.getParameter(TeacherKeys.LAST_NAME))
+                .bio(req.getParameter(TeacherKeys.BIO))
+                .build();
     }
 }

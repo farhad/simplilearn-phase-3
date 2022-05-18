@@ -56,6 +56,15 @@ public class TeacherController implements ITeacherController, Serializable {
 
     @Override
     public ViewState<Teacher> deleteTeacher(Teacher teacher) {
-        return null;
+        try {
+            var rowsAffected = dao.delete(Long.parseLong(teacher.getId()));
+            String message = null;
+            if (rowsAffected == 0) {
+                message = "failed to delete teacher";
+            }
+            return new ViewState<>(message, new ArrayList<>());
+        } catch (DataException e) {
+            return new ViewState<>(e.getMessage(), new ArrayList<>());
+        }
     }
 }
