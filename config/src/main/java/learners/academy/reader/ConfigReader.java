@@ -1,5 +1,7 @@
 package learners.academy.reader;
 
-public interface ConfigReader {
+import java.io.Serializable;
+
+public interface ConfigReader extends Serializable {
     String get(String key);
 }

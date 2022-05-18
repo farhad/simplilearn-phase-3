@@ -1,15 +1,15 @@
 package learners.academy.factory;
 
 import learners.academy.base.ConfigKeys;
-import learners.academy.reader.PropertyFileLoader;
+import learners.academy.reader.ConfigReader;
 
 public class ConfigurationFactory {
 
-    public static DBConnectionConfig createDbConnectionConfig(PropertyFileLoader loader) {
-        String username = loader.get(ConfigKeys.USERNAME);
-        String password = loader.get(ConfigKeys.PASSWORD);
-        String port = loader.get(ConfigKeys.PORT);
-        String databaseName = loader.get(ConfigKeys.DATABASE_NAME);
+    public static DBConnectionConfig createDbConnectionConfig(ConfigReader configReader) {
+        String username = configReader.get(ConfigKeys.USERNAME);
+        String password = configReader.get(ConfigKeys.PASSWORD);
+        String port = configReader.get(ConfigKeys.PORT);
+        String databaseName = configReader.get(ConfigKeys.DATABASE_NAME);
         return new DBConnectionConfig(username, password, port, databaseName);
     }
 }

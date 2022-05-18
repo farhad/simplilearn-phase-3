@@ -16,7 +16,7 @@
 
 </style>
 
-<body style="background-color: lightgray">
+<body style="background-color: darkgray">
 
 <div>
     <div class="container">
@@ -45,10 +45,10 @@
                         <c:out value="${teacher.id}"/>
                     </td>
                     <td>
-                        <c:out value="${teacher.first_name}"/>
+                        <c:out value="${teacher.firstName}"/>
                     </td>
                     <td>
-                        <c:out value="${teacher.last_name}"/>
+                        <c:out value="${teacher.lastName}"/>
                     </td>
                     <td>
                         <c:out value="${teacher.bio}"/>

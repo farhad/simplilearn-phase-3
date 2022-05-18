@@ -1,12 +1,13 @@
 package learners.academy.user;
 
 import learners.academy.User;
-import learners.academy.base.Dao;
 import learners.academy.base.DataException;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import learners.academy.base.IDao;
+import learners.academy.connector.IDataSourceConnector;
 
-import java.sql.Connection;
+import javax.enterprise.context.Dependent;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
@@ -16,12 +17,12 @@ import java.util.Optional;
 
 import static learners.academy.user.UserKeys.*;
 
-@RequiredArgsConstructor
-public class UserDao implements Dao<User> {
+@Named
+@Dependent
+public class UserIDao implements IDao<User> {
 
-    @NonNull
-    private Connection connection;
-
+    @Inject
+    private IDataSourceConnector dataSourceConnector;
 
     @Override
     public List<User> getAll() throws DataException {
@@ -52,17 +53,17 @@ public class UserDao implements Dao<User> {
                     params.get(PASSWORD));
 
             ResultSet resultSet;
-            try {
+            try (var connection = dataSourceConnector.connect()) {
                 resultSet = connection.createStatement().executeQuery(query);
                 Optional<User> user = Optional.empty();
                 while (resultSet.next()) {
                     user = Optional.of(new User(
-                            resultSet.getString(COLUMN_ID),
-                            resultSet.getString(COLUMN_FIRST_NAME),
-                            resultSet.getString(COLUMN_LAST_NAME),
-                            resultSet.getString(COLUMN_USER_NAME),
-                            resultSet.getString(COLUMN_PASS_WORD),
-                            resultSet.getString(COLUMN_ASSIGNED_ROLE)
+                            resultSet.getString(ID),
+                            resultSet.getString(FIRST_NAME),
+                            resultSet.getString(LAST_NAME),
+                            resultSet.getString(USERNAME),
+                            resultSet.getString(PASSWORD),
+                            resultSet.getString(ASSIGNED_ROLE)
                     ));
                 }
 

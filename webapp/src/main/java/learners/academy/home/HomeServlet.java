@@ -1,4 +1,4 @@
-package learners.academy;
+package learners.academy.home;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,13 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/teacher/*", name = "teacher")
-
-public class TeacherServlet extends HttpServlet {
+@WebServlet(urlPatterns = "", name = "home")
+public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        resp.getWriter().println("teachers list page");
+        resp.sendRedirect("teacher");
     }
 }

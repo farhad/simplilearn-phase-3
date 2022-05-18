@@ -1,7 +1,10 @@
 package learners.academy.reader;
 
+import learners.academy.base.ConfigKeys;
 import lombok.*;
 
+import javax.enterprise.context.Dependent;
+import javax.inject.Named;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -11,10 +14,11 @@ import java.util.Properties;
 @RequiredArgsConstructor(staticName = "from")
 @ToString
 @EqualsAndHashCode
+@Named
+@Dependent
 public class PropertyFileLoader implements ConfigReader {
 
-    @NonNull
-    private String fileUri;
+    private String fileUri = System.getenv(ConfigKeys.CONFIG_FILE_PATH);
 
     private Properties properties = new Properties();
 

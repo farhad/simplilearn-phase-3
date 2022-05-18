@@ -1,10 +1,11 @@
 package learners.academy.base;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public interface Dao<T> {
+public interface IDao<T> extends Serializable {
 
     List<T> getAll() throws DataException;
 

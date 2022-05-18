@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>learnersacademy</groupId>
-    <artifactId>dao</artifactId>
+    <artifactId>controller</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
@@ -21,28 +21,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.29</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>learnersacademy</groupId>
-            <artifactId>model</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
-        </dependency>
 
         <dependency>
             <groupId>learnersacademy</groupId>
-            <artifactId>config</artifactId>
+            <artifactId>dao</artifactId>
             <version>1.0.0</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -53,6 +40,7 @@
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
+            <version>1</version>
         </dependency>
 
         <dependency>
