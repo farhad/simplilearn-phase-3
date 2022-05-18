@@ -32,7 +32,7 @@ public class TeacherController implements ITeacherController, Serializable {
             var rowsAffected = dao.insert(teacher);
             String message = null;
             if (rowsAffected == 0) {
-                message = "failed to insert teacher object";
+                message = "failed to insert teacher";
             }
             return new ViewState<>(message, new ArrayList<>());
         } catch (DataException e) {
@@ -42,7 +42,16 @@ public class TeacherController implements ITeacherController, Serializable {
 
     @Override
     public ViewState<Teacher> updateTeacher(Teacher teacher) {
-        return null;
+        try {
+            var rowsAffected = dao.update(teacher);
+            String message = null;
+            if (rowsAffected == 0) {
+                message = "failed to update teacher";
+            }
+            return new ViewState<>(message, new ArrayList<>());
+        } catch (DataException e) {
+            return new ViewState<>(e.getMessage(), new ArrayList<>());
+        }
     }
 
     @Override

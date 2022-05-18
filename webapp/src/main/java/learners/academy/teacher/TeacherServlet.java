@@ -1,5 +1,6 @@
 package learners.academy.teacher;
 
+import com.mysql.cj.util.StringUtils;
 import learners.academy.Teacher;
 
 import javax.inject.Inject;
@@ -17,6 +18,7 @@ public class TeacherServlet extends HttpServlet {
     private ITeacherController controller;
 
     private static final String ATTR_TEACHERS_LIST = "teachersList";
+    private static final String ATTR_TEACHER = "teacher";
     private static final String ATTR_FETCH_ERROR = "fetch_error";
     private static final String ATTR_SAVE_ERROR = "save_error";
 
@@ -62,6 +64,13 @@ public class TeacherServlet extends HttpServlet {
     }
 
     private void displayEditTeacherPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        var teacher = Teacher.builder()
+                .id(req.getParameter(TeacherKeys.ID))
+                .firstName(req.getParameter(TeacherKeys.FIRST_NAME))
+                .lastName(req.getParameter(TeacherKeys.LAST_NAME))
+                .bio(req.getParameter(TeacherKeys.BIO)).build();
+
+        req.setAttribute(ATTR_TEACHER, teacher);
         req.getRequestDispatcher("/teacher_update.jsp").forward(req, resp);
     }
 
@@ -77,8 +86,13 @@ public class TeacherServlet extends HttpServlet {
                 .bio(req.getParameter(TeacherKeys.BIO))
                 .build();
 
-        var saveViewState = controller.addTeacher(teacher);
-        req.setAttribute(ATTR_SAVE_ERROR, saveViewState.getErrorMessage());
+        if (StringUtils.isEmptyOrWhitespaceOnly(req.getParameter(TeacherKeys.ID))) {
+            var saveViewState = controller.addTeacher(teacher);
+            req.setAttribute(ATTR_SAVE_ERROR, saveViewState.getErrorMessage());
+        } else {
+            var saveViewState = controller.updateTeacher(teacher);
+            req.setAttribute(ATTR_SAVE_ERROR, saveViewState.getErrorMessage());
+        }
 
         var listViewState = controller.getTeachersList();
         req.setAttribute(ATTR_FETCH_ERROR, listViewState.getErrorMessage());

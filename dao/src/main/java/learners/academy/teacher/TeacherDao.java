@@ -44,7 +44,17 @@ public class TeacherDao implements IDao<Teacher> {
 
     @Override
     public int update(Teacher row) throws DataException {
-        return 0;
+        try (var connection = dataSourceConnector.connect()) {
+            var query = "UPDATE Teachers SET first_name = ?, last_name = ?,  bio = ? WHERE id = ?;";
+            var statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, row.getFirstName());
+            statement.setString(2, row.getLastName());
+            statement.setString(3, row.getBio());
+            statement.setString(4, row.getId());
+            return statement.executeUpdate();
+        } catch (Exception exception) {
+            throw new DataException(exception);
+        }
     }
 
     @Override

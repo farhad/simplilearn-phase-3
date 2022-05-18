@@ -44,8 +44,26 @@
                     <td><c:out value="${teacher.firstName}"/></td>
                     <td><c:out value="${teacher.lastName}"/></td>
                     <td><c:out value="${teacher.bio}"/></td>
-                    <td><a href="edit?id=<c:out value='${teacher.id}' />">Edit</a> &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="delete?id=<c:out value='${teacher.id}' />">Delete</a></td>
+                    <td>
+                        <div style="float:left;">
+                            <form method="post" action="${requestScope['javax.servlet.forward.request_uri']}/edit">
+                                <input type="hidden" value="${teacher.id}" name="id">
+                                <input type="hidden" value="${teacher.firstName}" name="first_name">
+                                <input type="hidden" value="${teacher.lastName}" name="last_name">
+                                <input type="hidden" value="${teacher.bio}" name="bio">
+                                <input type="submit" value="Edit" class="btn btn-warning">
+                            </form>
+                        </div>
+                        <div style="float:left;margin-left: 20px;">
+                            <form method="post" action="${requestScope['javax.servlet.forward.request_uri']}/delete">
+                                <input type="hidden" value="${teacher.id}" name="id">
+                                <input type="hidden" value="${teacher.firstName}" name="first_name">
+                                <input type="hidden" value="${teacher.lastName}" name="last_name">
+                                <input type="hidden" value="${teacher.bio}" name="bio">
+                                <input type="submit" value="Delete" class="btn btn-danger">
+                            </form>
+                        </div>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
