@@ -32,30 +32,30 @@
                         <input type="hidden" name="id" value="<c:out value='${course.id}' />"/>
                     </c:if>
 
-                    <fieldset class="form-group" style="margin-top: 20px;">
-                        <label>First Name: </label> <input type="text"
-                                                           value="<c:out value='${course.title}' />"
-                                                           class="form-control"
-                                                           name="title" required="required">
-                    </fieldset>
+                        <fieldset class="form-group" style="margin-top: 20px;">
+                            <label>Course Title: </label> <input type="text"
+                                                                 value="<c:out value='${course.title}' />"
+                                                                 class="form-control"
+                                                                 name="course_title" required="required">
+                        </fieldset>
 
-                    <fieldset class="form-group" style="margin-top: 20px;">
-                        <label>First Name: </label> <input type="text"
-                                                           value="<c:out value='${course.description}' />"
-                                                           class="form-control"
-                                                           name="description" required="required">
-                    </fieldset>
+                        <fieldset class="form-group" style="margin-top: 20px;">
+                            <label>Course Description: </label> <input type="text"
+                                                                       value="<c:out value='${course.description}' />"
+                                                                       class="form-control"
+                                                                       name="course_description" required="required">
+                        </fieldset>
 
-                    <fieldset class="form-group" style="margin-top: 20px;">
-                        <label>First Name: </label> <input type="text"
-                                                           value="<c:out value='${course.subjectId}' />"
-                                                           class="form-control"
-                                                           name="subject_id" required="required">
-                    </fieldset>
+                        <fieldset class="form-group" style="margin-top: 20px;">
+                            <label>Subject: </label> <input type="text"
+                                                            value="<c:out value='${course.subjectId}' />"
+                                                            class="form-control"
+                                                            name="subject_id" required="required">
+                        </fieldset>
 
-                    <fieldset class="form-group" style="margin-top: 20px;">
-                        <label>First Name: </label> <input type="text"
-                                                           value="<c:out value='${course.teacherId}' />"
+                        <fieldset class="form-group" style="margin-top: 20px;">
+                            <label>Teacher: </label> <input type="text"
+                                                            value="<c:out value='${course.teacherId}' />"
                                                            class="form-control"
                                                            name="teacher_id" required="required">
                     </fieldset>
