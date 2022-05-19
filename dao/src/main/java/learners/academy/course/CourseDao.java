@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Named
+@Named("CourseDao")
 @Dependent
 public class CourseDao implements IDao<Course> {
 

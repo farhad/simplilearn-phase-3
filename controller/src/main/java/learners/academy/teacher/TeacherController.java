@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class TeacherController implements IController<Teacher> {
 
     @Inject
-    private TeacherDao dao;
+    private @Named("TeacherDao") TeacherDao dao;
 
     @Override
     public ViewState<Teacher> getList() {

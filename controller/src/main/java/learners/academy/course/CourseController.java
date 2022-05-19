@@ -3,6 +3,7 @@ package learners.academy.course;
 import learners.academy.Course;
 import learners.academy.base.DataException;
 import learners.academy.base.IController;
+import learners.academy.base.IDao;
 import learners.academy.base.ViewState;
 
 import javax.enterprise.context.SessionScoped;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 public class CourseController implements IController<Course> {
 
     @Inject
-    private CourseDao dao;
+    private @Named("CourseDao") IDao<Course> dao;
 
     @Override
     public ViewState<Course> getList() {

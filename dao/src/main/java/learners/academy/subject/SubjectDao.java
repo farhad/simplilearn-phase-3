@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Named
+@Named("SubjectDao")
 @Dependent
 public class SubjectDao implements IDao<Subject> {
 
