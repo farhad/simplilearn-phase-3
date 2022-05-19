@@ -35,34 +35,36 @@ create table Students(
                          primary key (id)
 );
 
-create table Classes(
-                        id INT auto_increment,
-                        subject_id INT ,
-                        teacher_id INT,
-                        title varchar(50),
-                        description varchar(100),
-                        primary key (id),
+create table Courses
+(
+    id          INT auto_increment,
+    subject_id  INT,
+    teacher_id  INT,
+    title       varchar(50),
+    description varchar(100),
+    primary key (id),
 
-                        constraint fk_subjects foreign key (subject_id) references Subjects(id)
-                            on update cascade
-                            on delete cascade,
+    constraint fk_subjects foreign key (subject_id) references Subjects (id)
+        on update cascade
+        on delete cascade,
 
                         constraint fk_teachers foreign key (teacher_id) references Teachers(id)
                             on update cascade
                             on delete cascade
 );
 
-create table Enrollments(
-                            id INT auto_increment,
-                            student_id INT ,
-                            class_id INT,
-                            primary key (id),
+create table Enrollments
+(
+    id         INT auto_increment,
+    student_id INT,
+    course_id  INT,
+    primary key (id),
 
-                            constraint fk_students foreign key (student_id) references Students(id)
-                                on update cascade
-                                on delete cascade,
+    constraint fk_students foreign key (student_id) references Students (id)
+        on update cascade
+        on delete cascade,
 
-                            constraint fk_classes foreign key (class_id) references Classes(id)
-                                on update cascade
-                                on delete cascade
+    constraint fk_courses foreign key (course_id) references Courses (id)
+        on update cascade
+        on delete cascade
 );
