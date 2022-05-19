@@ -1,6 +1,6 @@
-package learners.academy.teacher;
+package learners.academy.subject;
 
-import learners.academy.Teacher;
+import learners.academy.Subject;
 import learners.academy.base.DataException;
 import learners.academy.base.ViewState;
 
@@ -11,13 +11,13 @@ import java.util.ArrayList;
 
 @Named
 @SessionScoped
-public class TeacherController implements ITeacherController {
+public class SubjectController implements ISubjectController {
 
     @Inject
-    private TeacherDao dao;
+    private SubjectDao dao;
 
     @Override
-    public ViewState<Teacher> getTeachersList() {
+    public ViewState<Subject> getSubjectsList() {
         try {
             return new ViewState<>(null, dao.getAll());
         } catch (DataException e) {
@@ -26,12 +26,12 @@ public class TeacherController implements ITeacherController {
     }
 
     @Override
-    public ViewState<Teacher> addTeacher(Teacher teacher) {
+    public ViewState<Subject> addSubject(Subject subject) {
         try {
-            var rowsAffected = dao.insert(teacher);
+            var rowsAffected = dao.insert(subject);
             String message = null;
             if (rowsAffected == 0) {
-                message = "failed to insert teacher";
+                message = "failed to insert subject";
             }
             return new ViewState<>(message, new ArrayList<>());
         } catch (DataException e) {
@@ -40,12 +40,12 @@ public class TeacherController implements ITeacherController {
     }
 
     @Override
-    public ViewState<Teacher> updateTeacher(Teacher teacher) {
+    public ViewState<Subject> updateSubject(Subject subject) {
         try {
-            var rowsAffected = dao.update(teacher);
+            var rowsAffected = dao.update(subject);
             String message = null;
             if (rowsAffected == 0) {
-                message = "failed to update teacher";
+                message = "failed to update subject";
             }
             return new ViewState<>(message, new ArrayList<>());
         } catch (DataException e) {
@@ -54,12 +54,12 @@ public class TeacherController implements ITeacherController {
     }
 
     @Override
-    public ViewState<Teacher> deleteTeacher(Teacher teacher) {
+    public ViewState<Subject> deleteSubject(Subject subject) {
         try {
-            var rowsAffected = dao.delete(teacher.getId());
+            var rowsAffected = dao.delete(subject.getId());
             String message = null;
             if (rowsAffected == 0) {
-                message = "failed to delete teacher";
+                message = "failed to delete subject";
             }
             return new ViewState<>(message, new ArrayList<>());
         } catch (DataException e) {

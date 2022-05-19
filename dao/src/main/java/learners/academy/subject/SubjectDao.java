@@ -1,6 +1,6 @@
-package learners.academy.teacher;
+package learners.academy.subject;
 
-import learners.academy.Teacher;
+import learners.academy.Subject;
 import learners.academy.base.DataException;
 import learners.academy.base.IDao;
 import learners.academy.connector.IDataSourceConnector;
@@ -16,41 +16,38 @@ import java.util.Optional;
 
 @Named
 @Dependent
-public class TeacherDao implements IDao<Teacher> {
+public class SubjectDao implements IDao<Subject> {
 
     @Inject
     private IDataSourceConnector dataSourceConnector;
 
     @Override
-    public List<Teacher> getAll() throws DataException {
+    public List<Subject> getAll() throws DataException {
         try (var connection = dataSourceConnector.connect()) {
-            var query = "SELECT * FROM Teachers ORDER BY last_name, first_name;";
+            var query = "SELECT * FROM Subjects ORDER BY title DESC;";
             var resultSet = connection.createStatement().executeQuery(query);
-            var teachers = new ArrayList<Teacher>();
+            var subjects = new ArrayList<Subject>();
             while (resultSet.next()) {
-                teachers.add(Teacher.builder()
-                        .id(resultSet.getLong(TeacherKeys.ID))
-                        .firstName(resultSet.getString(TeacherKeys.FIRST_NAME))
-                        .lastName(resultSet.getString(TeacherKeys.LAST_NAME))
-                        .bio(resultSet.getString(TeacherKeys.BIO))
+                subjects.add(Subject.builder()
+                        .id(resultSet.getLong(SubjectKeys.ID))
+                        .title(resultSet.getString(SubjectKeys.TITLE))
+                        .description(resultSet.getString(SubjectKeys.DESCRIPTION))
                         .build());
             }
-
-            return teachers;
+            return subjects;
         } catch (Exception exception) {
             throw new DataException(exception);
         }
     }
 
     @Override
-    public int update(Teacher row) throws DataException {
+    public int update(Subject row) throws DataException {
         try (var connection = dataSourceConnector.connect()) {
-            var query = "UPDATE Teachers SET first_name = ?, last_name = ?,  bio = ? WHERE id = ?;";
+            var query = "UPDATE Subjects SET title = ?, `description` = ? WHERE id = ?;";
             var statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, row.getFirstName());
-            statement.setString(2, row.getLastName());
-            statement.setString(3, row.getBio());
-            statement.setLong(4, row.getId());
+            statement.setString(1, row.getTitle());
+            statement.setString(2, row.getDescription());
+            statement.setLong(3, row.getId());
             return statement.executeUpdate();
         } catch (Exception exception) {
             throw new DataException(exception);
@@ -58,13 +55,12 @@ public class TeacherDao implements IDao<Teacher> {
     }
 
     @Override
-    public int insert(Teacher row) throws DataException {
+    public int insert(Subject row) throws DataException {
         try (var connection = dataSourceConnector.connect()) {
-            var query = "INSERT INTO Teachers(first_name, last_name, bio) VALUES(?,?,?);";
+            var query = "INSERT INTO Subjects (title, `description`) VALUES(?,?);";
             var statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, row.getFirstName());
-            statement.setString(2, row.getLastName());
-            statement.setString(3, row.getBio());
+            statement.setString(1, row.getTitle());
+            statement.setString(2, row.getDescription());
             return statement.executeUpdate();
         } catch (Exception exception) {
             throw new DataException(exception);
@@ -74,7 +70,7 @@ public class TeacherDao implements IDao<Teacher> {
     @Override
     public int delete(long id) throws DataException {
         try (var connection = dataSourceConnector.connect()) {
-            var query = "DELETE FROM Teachers WHERE id = ?;";
+            var query = "DELETE FROM Subjects WHERE id = ?;";
             var statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setLong(1, id);
             return statement.executeUpdate();
@@ -84,7 +80,7 @@ public class TeacherDao implements IDao<Teacher> {
     }
 
     @Override
-    public Optional<Teacher> find(Map<String, String> params) throws DataException {
+    public Optional<Subject> find(Map<String, String> params) throws DataException {
         return Optional.empty();
     }
 }

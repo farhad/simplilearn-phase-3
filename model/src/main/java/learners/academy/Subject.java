@@ -7,9 +7,8 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 @Builder
-public class Teacher {
+public class Subject {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String bio;
+    private String title;
+    private String description;
 }

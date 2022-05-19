@@ -3,7 +3,9 @@ package learners.academy.teacher;
 import learners.academy.Teacher;
 import learners.academy.base.ViewState;
 
-public interface ITeacherController {
+import java.io.Serializable;
+
+public interface ITeacherController extends Serializable {
 
     ViewState<Teacher> getTeachersList();
 
