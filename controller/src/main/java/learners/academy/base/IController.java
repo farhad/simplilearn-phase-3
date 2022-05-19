@@ -2,7 +2,7 @@ package learners.academy.base;
 
 import java.io.Serializable;
 
-public interface BaseController<T> extends Serializable {
+public interface IController<T> extends Serializable {
 
     ViewState<T> getList();
 

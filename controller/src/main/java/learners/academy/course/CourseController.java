@@ -1,8 +1,8 @@
 package learners.academy.course;
 
 import learners.academy.Course;
-import learners.academy.base.BaseController;
 import learners.academy.base.DataException;
+import learners.academy.base.IController;
 import learners.academy.base.ViewState;
 
 import javax.enterprise.context.SessionScoped;
@@ -10,9 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 
-@Named
+@Named("Course")
 @SessionScoped
-public class CourseController implements BaseController<Course> {
+public class CourseController implements IController<Course> {
 
     @Inject
     private CourseDao dao;

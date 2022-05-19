@@ -2,6 +2,7 @@ package learners.academy.student;
 
 import learners.academy.Student;
 import learners.academy.base.DataException;
+import learners.academy.base.IController;
 import learners.academy.base.ViewState;
 
 import javax.enterprise.context.SessionScoped;
@@ -9,15 +10,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 
-@Named
+@Named("Student")
 @SessionScoped
-public class StudentController implements IStudentController {
+public class StudentController implements IController<Student> {
 
     @Inject
     private StudentDao dao;
 
     @Override
-    public ViewState<Student> getStudentsList() {
+    public ViewState<Student> getList() {
         try {
             return new ViewState<>(null, dao.getAll());
         } catch (DataException e) {
@@ -26,7 +27,7 @@ public class StudentController implements IStudentController {
     }
 
     @Override
-    public ViewState<Student> addStudent(Student student) {
+    public ViewState<Student> add(Student student) {
         try {
             var rowsAffected = dao.insert(student);
             String message = null;
@@ -40,7 +41,7 @@ public class StudentController implements IStudentController {
     }
 
     @Override
-    public ViewState<Student> updateStudent(Student student) {
+    public ViewState<Student> update(Student student) {
         try {
             var rowsAffected = dao.update(student);
             String message = null;
@@ -54,7 +55,7 @@ public class StudentController implements IStudentController {
     }
 
     @Override
-    public ViewState<Student> deleteStudent(Student student) {
+    public ViewState<Student> delete(Student student) {
         try {
             var rowsAffected = dao.delete(student.getId());
             String message = null;

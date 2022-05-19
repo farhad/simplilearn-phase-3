@@ -2,8 +2,10 @@ package learners.academy.subject;
 
 import com.mysql.cj.util.StringUtils;
 import learners.academy.Subject;
+import learners.academy.base.IController;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +17,7 @@ import java.io.IOException;
 public class SubjectServlet extends HttpServlet {
 
     @Inject
-    private ISubjectController controller;
+    private @Named("Subject") IController<Subject> controller;
 
     private static final String ATTR_SUBJECTS_LIST = "subjectsList";
     private static final String ATTR_SUBJECT = "subject";
@@ -73,10 +75,10 @@ public class SubjectServlet extends HttpServlet {
         var subject = buildFromRequest(req);
 
         if (!StringUtils.isEmptyOrWhitespaceOnly(req.getParameter(SubjectKeys.ID))) {
-            req.setAttribute(ATTR_SAVE_ERROR, controller.deleteSubject(subject).getErrorMessage());
+            req.setAttribute(ATTR_SAVE_ERROR, controller.delete(subject).getErrorMessage());
         }
 
-        var listViewState = controller.getSubjectsList();
+        var listViewState = controller.getList();
         req.setAttribute(ATTR_FETCH_ERROR, listViewState.getErrorMessage());
         req.setAttribute(ATTR_SUBJECTS_LIST, listViewState.getData());
         resp.sendRedirect(req.getContextPath());
@@ -86,21 +88,21 @@ public class SubjectServlet extends HttpServlet {
         var subject = buildFromRequest(req);
 
         if (StringUtils.isEmptyOrWhitespaceOnly(req.getParameter(SubjectKeys.ID))) {
-            req.setAttribute(ATTR_SAVE_ERROR, controller.addSubject(subject).getErrorMessage());
+            req.setAttribute(ATTR_SAVE_ERROR, controller.add(subject).getErrorMessage());
         } else {
-            req.setAttribute(ATTR_SAVE_ERROR, controller.updateSubject(subject).getErrorMessage());
+            req.setAttribute(ATTR_SAVE_ERROR, controller.update(subject).getErrorMessage());
         }
 
         req.removeAttribute(ATTR_SUBJECT);
 
-        var listViewState = controller.getSubjectsList();
+        var listViewState = controller.getList();
         req.setAttribute(ATTR_FETCH_ERROR, listViewState.getErrorMessage());
         req.setAttribute(ATTR_SUBJECTS_LIST, listViewState.getData());
         resp.sendRedirect(req.getContextPath());
     }
 
     private void displaySubjectsList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        var viewState = controller.getSubjectsList();
+        var viewState = controller.getList();
         req.setAttribute(ATTR_FETCH_ERROR, viewState.getErrorMessage());
         req.setAttribute(ATTR_SUBJECTS_LIST, viewState.getData());
         req.getRequestDispatcher("/subject.jsp").forward(req, resp);

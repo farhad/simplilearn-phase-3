@@ -2,6 +2,7 @@ package learners.academy.subject;
 
 import learners.academy.Subject;
 import learners.academy.base.DataException;
+import learners.academy.base.IController;
 import learners.academy.base.ViewState;
 
 import javax.enterprise.context.SessionScoped;
@@ -9,15 +10,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 
-@Named
+@Named("Subject")
 @SessionScoped
-public class SubjectController implements ISubjectController {
+public class SubjectController implements IController<Subject> {
 
     @Inject
     private SubjectDao dao;
 
     @Override
-    public ViewState<Subject> getSubjectsList() {
+    public ViewState<Subject> getList() {
         try {
             return new ViewState<>(null, dao.getAll());
         } catch (DataException e) {
@@ -26,7 +27,7 @@ public class SubjectController implements ISubjectController {
     }
 
     @Override
-    public ViewState<Subject> addSubject(Subject subject) {
+    public ViewState<Subject> add(Subject subject) {
         try {
             var rowsAffected = dao.insert(subject);
             String message = null;
@@ -40,7 +41,7 @@ public class SubjectController implements ISubjectController {
     }
 
     @Override
-    public ViewState<Subject> updateSubject(Subject subject) {
+    public ViewState<Subject> update(Subject subject) {
         try {
             var rowsAffected = dao.update(subject);
             String message = null;
@@ -54,7 +55,7 @@ public class SubjectController implements ISubjectController {
     }
 
     @Override
-    public ViewState<Subject> deleteSubject(Subject subject) {
+    public ViewState<Subject> delete(Subject subject) {
         try {
             var rowsAffected = dao.delete(subject.getId());
             String message = null;

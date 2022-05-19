@@ -20,10 +20,10 @@
                     <caption>
                         <h2>
                             <c:if test="${course != null}">
-                                Edit Course
+                                Edit Class
                             </c:if>
                             <c:if test="${course == null}">
-                                Add New Course
+                                Add New Class
                             </c:if>
                         </h2>
                     </caption>
@@ -33,31 +33,39 @@
                     </c:if>
 
                         <fieldset class="form-group" style="margin-top: 20px;">
-                            <label>Course Title: </label> <input type="text"
-                                                                 value="<c:out value='${course.title}' />"
-                                                                 class="form-control"
-                                                                 name="course_title" required="required">
+                            <label>Title: </label> <input type="text"
+                                                          value="<c:out value='${course.title}' />"
+                                                          class="form-control"
+                                                          name="course_title" required="required">
                         </fieldset>
 
                         <fieldset class="form-group" style="margin-top: 20px;">
-                            <label>Course Description: </label> <input type="text"
-                                                                       value="<c:out value='${course.description}' />"
-                                                                       class="form-control"
-                                                                       name="course_description" required="required">
-                        </fieldset>
+                            <label>Description: </label> <input type="text"
+                                                                value="<c:out value='${course.description}' />"
+                                                                   class="form-control"
+                                                                   name="course_description" required="required">
+                    </fieldset>
 
-                        <fieldset class="form-group" style="margin-top: 20px;">
-                            <label>Subject: </label> <input type="text"
-                                                            value="<c:out value='${course.subjectId}' />"
-                                                            class="form-control"
-                                                            name="subject_id" required="required">
-                        </fieldset>
+                    <fieldset class="form-group" style="margin-top: 20px;">
+                        <label>Subject: </label>
+                        <select name="subject_id" required>
+                            <c:forEach items="${subjectsList}" var="subjectItem">
+                                <option
+                                        <c:if test="${subjectItem.id eq selectedSubjectId}">selected="selected"</c:if>
+                                        value="${subjectItem.id}">${subjectItem.title}</option>
+                            </c:forEach>
+                        </select>
+                    </fieldset>
 
-                        <fieldset class="form-group" style="margin-top: 20px;">
-                            <label>Teacher: </label> <input type="text"
-                                                            value="<c:out value='${course.teacherId}' />"
-                                                           class="form-control"
-                                                           name="teacher_id" required="required">
+                    <fieldset class="form-group" style="margin-top: 20px;">
+                        <label>Teacher: </label>
+                        <select name="teacher_id" required>
+                            <c:forEach items="${teachersList}" var="teacherItem">
+                                <option
+                                        <c:if test="${teacherItem.id eq selectedTeacherId}">selected="selected"</c:if>
+                                        value="${teacherItem.id}">${teacherItem.lastName}, ${teacherItem.firstName}</option>
+                            </c:forEach>
+                        </select>
                     </fieldset>
 
                     <button style="margin-top: 20px;" type="submit" class="btn btn-success">Save</button>

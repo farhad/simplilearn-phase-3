@@ -2,8 +2,10 @@ package learners.academy.teacher;
 
 import com.mysql.cj.util.StringUtils;
 import learners.academy.Teacher;
+import learners.academy.base.IController;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +17,7 @@ import java.io.IOException;
 public class TeacherServlet extends HttpServlet {
 
     @Inject
-    private ITeacherController controller;
+    private @Named("Teacher") IController<Teacher> controller;
 
     private static final String ATTR_TEACHERS_LIST = "teachersList";
     private static final String ATTR_TEACHER = "teacher";
@@ -73,10 +75,10 @@ public class TeacherServlet extends HttpServlet {
         var teacher = buildFromRequest(req);
 
         if (!StringUtils.isEmptyOrWhitespaceOnly(req.getParameter(TeacherKeys.ID))) {
-            req.setAttribute(ATTR_SAVE_ERROR, controller.deleteTeacher(teacher).getErrorMessage());
+            req.setAttribute(ATTR_SAVE_ERROR, controller.delete(teacher).getErrorMessage());
         }
 
-        var listViewState = controller.getTeachersList();
+        var listViewState = controller.getList();
         req.setAttribute(ATTR_FETCH_ERROR, listViewState.getErrorMessage());
         req.setAttribute(ATTR_TEACHERS_LIST, listViewState.getData());
         resp.sendRedirect(req.getContextPath());
@@ -86,21 +88,21 @@ public class TeacherServlet extends HttpServlet {
         var teacher = buildFromRequest(req);
 
         if (StringUtils.isEmptyOrWhitespaceOnly(req.getParameter(TeacherKeys.ID))) {
-            req.setAttribute(ATTR_SAVE_ERROR, controller.addTeacher(teacher).getErrorMessage());
+            req.setAttribute(ATTR_SAVE_ERROR, controller.add(teacher).getErrorMessage());
         } else {
-            req.setAttribute(ATTR_SAVE_ERROR, controller.updateTeacher(teacher).getErrorMessage());
+            req.setAttribute(ATTR_SAVE_ERROR, controller.update(teacher).getErrorMessage());
         }
 
         req.removeAttribute(ATTR_TEACHER);
 
-        var listViewState = controller.getTeachersList();
+        var listViewState = controller.getList();
         req.setAttribute(ATTR_FETCH_ERROR, listViewState.getErrorMessage());
         req.setAttribute(ATTR_TEACHERS_LIST, listViewState.getData());
         resp.sendRedirect(req.getContextPath());
     }
 
     private void displayTeachersList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        var viewState = controller.getTeachersList();
+        var viewState = controller.getList();
         req.setAttribute(ATTR_FETCH_ERROR, viewState.getErrorMessage());
         req.setAttribute(ATTR_TEACHERS_LIST, viewState.getData());
         req.getRequestDispatcher("/teacher.jsp").forward(req, resp);

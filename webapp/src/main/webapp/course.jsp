@@ -23,7 +23,7 @@
         <hr>
         <div class="container text-left">
             <a href="${requestScope['javax.servlet.forward.request_uri']}/add" class="btn btn-success">Add New
-                Course</a>
+                Class</a>
         </div>
         <br>
         <table class="table table-bordered">

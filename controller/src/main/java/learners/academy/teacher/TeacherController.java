@@ -2,6 +2,7 @@ package learners.academy.teacher;
 
 import learners.academy.Teacher;
 import learners.academy.base.DataException;
+import learners.academy.base.IController;
 import learners.academy.base.ViewState;
 
 import javax.enterprise.context.SessionScoped;
@@ -9,15 +10,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 
-@Named
+@Named("Teacher")
 @SessionScoped
-public class TeacherController implements ITeacherController {
+public class TeacherController implements IController<Teacher> {
 
     @Inject
     private TeacherDao dao;
 
     @Override
-    public ViewState<Teacher> getTeachersList() {
+    public ViewState<Teacher> getList() {
         try {
             return new ViewState<>(null, dao.getAll());
         } catch (DataException e) {
@@ -26,7 +27,7 @@ public class TeacherController implements ITeacherController {
     }
 
     @Override
-    public ViewState<Teacher> addTeacher(Teacher teacher) {
+    public ViewState<Teacher> add(Teacher teacher) {
         try {
             var rowsAffected = dao.insert(teacher);
             String message = null;
@@ -40,7 +41,7 @@ public class TeacherController implements ITeacherController {
     }
 
     @Override
-    public ViewState<Teacher> updateTeacher(Teacher teacher) {
+    public ViewState<Teacher> update(Teacher teacher) {
         try {
             var rowsAffected = dao.update(teacher);
             String message = null;
@@ -54,7 +55,7 @@ public class TeacherController implements ITeacherController {
     }
 
     @Override
-    public ViewState<Teacher> deleteTeacher(Teacher teacher) {
+    public ViewState<Teacher> delete(Teacher teacher) {
         try {
             var rowsAffected = dao.delete(teacher.getId());
             String message = null;
