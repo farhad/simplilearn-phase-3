@@ -19,11 +19,11 @@
 
 <div>
     <div class="container">
-        <h3 class="text-center">Teachers</h3>
+        <h3 class="text-center">Students</h3>
         <hr>
         <div class="container text-left">
             <a href="${requestScope['javax.servlet.forward.request_uri']}/add" class="btn btn-success">Add New
-                Teacher</a>
+                Student</a>
         </div>
         <br>
         <table class="table table-bordered">
@@ -32,24 +32,21 @@
                 <th>ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>Bio</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="studentItem" items="${teachersList}">
+            <c:forEach var="studentItem" items="${studentsList}">
                 <tr>
                     <td><c:out value="${studentItem.id}"/></td>
                     <td><c:out value="${studentItem.firstName}"/></td>
                     <td><c:out value="${studentItem.lastName}"/></td>
-                    <td><c:out value="${studentItem.bio}"/></td>
                     <td>
                         <div style="float:left;">
                             <form method="post" action="${requestScope['javax.servlet.forward.request_uri']}/edit">
                                 <input type="hidden" value="${studentItem.id}" name="id">
                                 <input type="hidden" value="${studentItem.firstName}" name="first_name">
                                 <input type="hidden" value="${studentItem.lastName}" name="last_name">
-                                <input type="hidden" value="${studentItem.bio}" name="bio">
                                 <input type="submit" value="Edit" class="btn btn-warning">
                             </form>
                         </div>
@@ -58,7 +55,6 @@
                                 <input type="hidden" value="${studentItem.id}" name="id">
                                 <input type="hidden" value="${studentItem.firstName}" name="first_name">
                                 <input type="hidden" value="${studentItem.lastName}" name="last_name">
-                                <input type="hidden" value="${studentItem.bio}" name="bio">
                                 <input type="submit" value="Delete" class="btn btn-danger">
                             </form>
                         </div>

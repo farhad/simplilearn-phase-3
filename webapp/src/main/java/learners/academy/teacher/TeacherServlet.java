@@ -107,8 +107,13 @@ public class TeacherServlet extends HttpServlet {
     }
 
     private Teacher buildFromRequest(HttpServletRequest req) {
+        Long id = null;
+        if (!StringUtils.isEmptyOrWhitespaceOnly(req.getParameter(TeacherKeys.ID))) {
+            id = Long.valueOf(req.getParameter(TeacherKeys.ID));
+        }
+
         return Teacher.builder()
-                .id(Long.valueOf(req.getParameter(TeacherKeys.ID)))
+                .id(id)
                 .firstName(req.getParameter(TeacherKeys.FIRST_NAME))
                 .lastName(req.getParameter(TeacherKeys.LAST_NAME))
                 .bio(req.getParameter(TeacherKeys.BIO))
