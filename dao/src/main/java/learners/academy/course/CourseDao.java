@@ -1,6 +1,8 @@
 package learners.academy.course;
 
 import learners.academy.Course;
+import learners.academy.Subject;
+import learners.academy.Teacher;
 import learners.academy.base.DataException;
 import learners.academy.base.IDao;
 import learners.academy.connector.IDataSourceConnector;
@@ -32,16 +34,23 @@ public class CourseDao implements IDao<Course> {
             var resultSet = connection.createStatement().executeQuery(query);
             var courses = new ArrayList<Course>();
             while (resultSet.next()) {
+                var subject = Subject.builder()
+                        .id(resultSet.getLong(CourseKeys.SUBJECT_ID))
+                        .title(resultSet.getString(CourseKeys.SUBJECT_TITLE))
+                        .description(resultSet.getString(CourseKeys.SUBJECT_DESCRIPTION)).build();
+
+                var teacher = Teacher.builder()
+                        .id(resultSet.getLong(CourseKeys.TEACHER_ID))
+                        .firstName(resultSet.getString(CourseKeys.TEACHER_FIRST_NAME))
+                        .lastName(resultSet.getString(CourseKeys.TEACHER_LAST_NAME))
+                        .build();
+
                 courses.add(Course.builder()
                         .id(resultSet.getLong(CourseKeys.ID))
-                        .subjectId(resultSet.getLong(CourseKeys.SUBJECT_ID))
-                        .subjectTitle(resultSet.getString(CourseKeys.SUBJECT_TITLE))
-                        .subjectDescription(resultSet.getString(CourseKeys.SUBJECT_DESCRIPTION))
-                        .teacherId(resultSet.getLong(CourseKeys.TEACHER_ID))
-                        .teacherFirstName(resultSet.getString(CourseKeys.TEACHER_FIRST_NAME))
-                        .teacherLastName(resultSet.getString(CourseKeys.TEACHER_LAST_NAME))
                         .title(resultSet.getString(CourseKeys.COURSE_TITLE))
                         .description(resultSet.getString(CourseKeys.COURSE_DESCRIPTION))
+                        .subject(subject)
+                        .teacher(teacher)
                         .build());
             }
 
@@ -56,8 +65,8 @@ public class CourseDao implements IDao<Course> {
         try (var connection = dataSourceConnector.connect()) {
             var query = "UPDATE Courses SET subject_id = ?, teacher_id = ?, title = ?, `description` = ? WHERE id = ?;";
             var statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            statement.setLong(1, row.getSubjectId());
-            statement.setLong(2, row.getTeacherId());
+            statement.setLong(1, row.getSubject().getId());
+            statement.setLong(2, row.getTeacher().getId());
             statement.setString(3, row.getTitle());
             statement.setString(4, row.getDescription());
             statement.setLong(5, row.getId());
@@ -72,8 +81,8 @@ public class CourseDao implements IDao<Course> {
         try (var connection = dataSourceConnector.connect()) {
             var query = "INSERT INTO Courses(subject_id, teacher_id, title, `description`) VALUES(?,?,?,?);";
             var statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            statement.setLong(1, row.getSubjectId());
-            statement.setLong(2, row.getTeacherId());
+            statement.setLong(1, row.getSubject().getId());
+            statement.setLong(2, row.getTeacher().getId());
             statement.setString(3, row.getTitle());
             statement.setString(4, row.getDescription());
             return statement.executeUpdate();

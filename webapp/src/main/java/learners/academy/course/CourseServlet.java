@@ -87,11 +87,11 @@ public class CourseServlet extends HttpServlet {
 
         var subjects = subjectController.getList().getData();
         req.setAttribute(ATTR_SUBJECTS_LIST, subjects);
-        req.setAttribute(ATTR_SELECTED_SUBJECT_ID, course.getSubjectId());
+        req.setAttribute(ATTR_SELECTED_SUBJECT_ID, course.getSubject().getId());
 
         var teachers = teacherController.getList().getData();
         req.setAttribute(ATTR_TEACHERS_LIST, teachers);
-        req.setAttribute(ATTR_SELECTED_TEACHER_ID, course.getTeacherId());
+        req.setAttribute(ATTR_SELECTED_TEACHER_ID, course.getTeacher().getId());
 
         req.getRequestDispatcher("/course_update.jsp").forward(req, resp);
     }
@@ -140,12 +140,8 @@ public class CourseServlet extends HttpServlet {
 
         return Course.builder()
                 .id(id)
-                .subjectId(Long.valueOf(request.getParameter(CourseKeys.SUBJECT_ID)))
-                .subjectTitle(request.getParameter(CourseKeys.SUBJECT_TITLE))
-                .subjectDescription(request.getParameter(CourseKeys.SUBJECT_DESCRIPTION))
-                .teacherId(Long.valueOf(request.getParameter(CourseKeys.TEACHER_ID)))
-                .teacherFirstName(request.getParameter(CourseKeys.TEACHER_FIRST_NAME))
-                .teacherLastName(request.getParameter(CourseKeys.TEACHER_LAST_NAME))
+                .subject(Subject.builder().id(Long.valueOf(request.getParameter(CourseKeys.SUBJECT_ID))).build())
+                .teacher(Teacher.builder().id(Long.valueOf(request.getParameter(CourseKeys.TEACHER_ID))).build())
                 .title(request.getParameter(CourseKeys.COURSE_TITLE))
                 .description(request.getParameter(CourseKeys.COURSE_DESCRIPTION))
                 .build();

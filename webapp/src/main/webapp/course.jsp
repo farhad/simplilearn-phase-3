@@ -45,16 +45,16 @@
                     <td><c:out value="${courseItem.id}"/></td>
                     <td><c:out value="${courseItem.title}"/></td>
                     <td><c:out value="${courseItem.description}"/></td>
-                    <td><c:out value="${courseItem.subjectTitle}"/></td>
-                    <td><c:out value="${courseItem.subjectDescription}"/></td>
-                    <td><c:out value="${courseItem.teacherFirstName}"/></td>
-                    <td><c:out value="${courseItem.teacherLastName}"/></td>
+                    <td><c:out value="${courseItem.subject.title}"/></td>
+                    <td><c:out value="${courseItem.subject.description}"/></td>
+                    <td><c:out value="${courseItem.teacher.firstName}"/></td>
+                    <td><c:out value="${courseItem.teacher.lastName}"/></td>
                     <td>
                         <div style="float:left;">
                             <form method="post" action="${requestScope['javax.servlet.forward.request_uri']}/edit">
                                 <input type="hidden" value="${courseItem.id}" name="id">
-                                <input type="hidden" value="${courseItem.subjectId}" name="subject_id">
-                                <input type="hidden" value="${courseItem.teacherId}" name="teacher_id">
+                                <input type="hidden" value="${courseItem.subject.id}" name="subject_id">
+                                <input type="hidden" value="${courseItem.teacher.id}" name="teacher_id">
                                 <input type="hidden" value="${courseItem.title}" name="course_title">
                                 <input type="hidden" value="${courseItem.description}" name="course_description">
                                 <input type="submit" value="Edit" class="btn btn-warning">
@@ -63,8 +63,8 @@
                         <div style="float:left;margin-left: 20px;">
                             <form method="post" action="${requestScope['javax.servlet.forward.request_uri']}/delete">
                                 <input type="hidden" value="${courseItem.id}" name="id">
-                                <input type="hidden" value="${courseItem.subjectId}" name="subject_id">
-                                <input type="hidden" value="${courseItem.teacherId}" name="teacher_id">
+                                <input type="hidden" value="${courseItem.subject.id}" name="subject_id">
+                                <input type="hidden" value="${courseItem.teacher.id}" name="teacher_id">
                                 <input type="hidden" value="${courseItem.title}" name="course_title">
                                 <input type="hidden" value="${courseItem.description}" name="course_description">
                                 <input type="submit" value="Delete" class="btn btn-danger">
