@@ -11,15 +11,15 @@ import javax.inject.Named;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import static learners.academy.user.UserKeys.*;
 
-@Named
+@Named("UserDao")
 @Dependent
-public class UserIDao implements IDao<User> {
+public class UserDao implements IDao<User> {
 
     @Inject
     private IDataSourceConnector dataSourceConnector;
@@ -45,35 +45,32 @@ public class UserIDao implements IDao<User> {
     }
 
     @Override
-    public Optional<User> find(Map<String, String> params) throws DataException {
+    public List<User> find(Map<String, String> params) throws DataException {
         if (params.get(USERNAME) != null && params.get(PASSWORD) != null) {
-            var query = MessageFormat.format(
-                    "SELECT * FROM Users WHERE username = ''{0}'' AND password = ''{1}''",
-                    params.get(USERNAME),
-                    params.get(PASSWORD));
-
-            ResultSet resultSet;
             try (var connection = dataSourceConnector.connect()) {
-                resultSet = connection.createStatement().executeQuery(query);
-                Optional<User> user = Optional.empty();
+                var users = new ArrayList<User>();
+                var query = MessageFormat.format(
+                        "SELECT * FROM Users WHERE username = ''{0}'' AND password = ''{1}''",
+                        params.get(USERNAME),
+                        params.get(PASSWORD));
+                ResultSet resultSet = connection.createStatement().executeQuery(query);
                 while (resultSet.next()) {
-                    user = Optional.of(new User(
-                            resultSet.getString(ID),
-                            resultSet.getString(FIRST_NAME),
-                            resultSet.getString(LAST_NAME),
-                            resultSet.getString(USERNAME),
-                            resultSet.getString(PASSWORD),
-                            resultSet.getString(ASSIGNED_ROLE)
-                    ));
+                    users.add(User.builder()
+                            .id(resultSet.getLong(ID))
+                            .firstName(resultSet.getString(FIRST_NAME))
+                            .lastName(resultSet.getString(LAST_NAME))
+                            .userName(resultSet.getString(USERNAME))
+                            .password(resultSet.getString(PASSWORD))
+                            .assignedRole(resultSet.getString(resultSet.getString(ASSIGNED_ROLE))).build());
                 }
 
-                return user;
+                return users;
 
             } catch (SQLException e) {
                 throw new DataException(e);
             }
         }
 
-        return Optional.empty();
+        return new ArrayList<>();
     }
 }

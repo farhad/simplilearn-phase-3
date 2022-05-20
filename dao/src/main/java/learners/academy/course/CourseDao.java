@@ -14,7 +14,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Named("CourseDao")
 @Dependent
@@ -104,7 +103,7 @@ public class CourseDao implements IDao<Course> {
     }
 
     @Override
-    public Optional<Course> find(Map<String, String> params) throws DataException {
-        return Optional.empty();
+    public List<Course> find(Map<String, String> params) throws DataException {
+        return null;
     }
 }

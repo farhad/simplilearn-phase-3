@@ -3,7 +3,6 @@ package learners.academy.base;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public interface IDao<T> extends Serializable {
 
@@ -15,5 +14,5 @@ public interface IDao<T> extends Serializable {
 
     int delete(long id) throws DataException;
 
-    Optional<T> find(Map<String, String> params) throws DataException;
+    List<T> find(Map<String, String> params) throws DataException;
 }
