@@ -4,7 +4,6 @@
 <html>
 <head>
     <title>Dashboard | Learners Academy</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <style>
@@ -15,14 +14,13 @@
 
 </style>
 
-<body style="background-color: darkgray">
-
+<body style="background-color: ghostwhite">
+<jsp:include page="header.jsp"/>
 <div>
     <div class="container">
-        <h3 class="text-center">Enrollments</h3>
-        <hr>
         <div class="container text-left">
-            <a href="${requestScope['javax.servlet.forward.request_uri']}/add" class="btn btn-success">Add New
+            <a href="${requestScope['javax.servlet.forward.request_uri']}/add" class="btn btn-success"
+               style="background-color: coral">Add New
                 Enrollment</a>
         </div>
         <br>

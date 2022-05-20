@@ -6,7 +6,7 @@
     <title>Learners Academy</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body style="background-color: ghostwhite;">
 <div class="container col-md-5" style="margin-top: 30px;">
     <div class="card">
         <div class="card-body">
@@ -46,7 +46,9 @@
                                                             name="description">
                     </fieldset>
 
-                    <button style="margin-top: 20px;" type="submit" class="btn btn-success">Save</button>
+                        <button style="margin-top: 20px;background-color: coral" type="submit" class="btn btn-success">
+                            Save
+                        </button>
                 </form>
         </div>
     </div>

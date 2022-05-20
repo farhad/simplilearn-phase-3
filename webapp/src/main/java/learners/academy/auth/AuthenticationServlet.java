@@ -50,7 +50,7 @@ public class AuthenticationServlet extends HttpServlet {
         if (StringUtils.isEmptyOrWhitespaceOnly(viewState.getErrorMessage())) {
             req.getSession(false).removeAttribute(ATTR_AUTH_ERROR);
             req.getSession().setAttribute(UserKeys.SESSION_ID, viewState.getData().get(0).fullName());
-            resp.sendRedirect(req.getContextPath() + "/student");
+            resp.sendRedirect(req.getContextPath() + "/dashboard");
         } else {
             req.getSession(false).setAttribute(ATTR_AUTH_ERROR, viewState.getErrorMessage());
             resp.sendRedirect(req.getContextPath() + "/auth");

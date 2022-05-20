@@ -20,7 +20,7 @@ public class HomeServlet extends HttpServlet {
         if (req.getSession() != null
                 && req.getSession().getAttribute(UserKeys.SESSION_ID) != null
                 && !StringUtils.isEmptyOrWhitespaceOnly(req.getSession().getAttribute(UserKeys.SESSION_ID).toString())) {
-            resp.sendRedirect("student");
+            resp.sendRedirect("dashboard");
         } else if (req.getSession() == null
                 || req.getSession().getAttribute(UserKeys.SESSION_ID) == null) {
             resp.sendRedirect("auth");

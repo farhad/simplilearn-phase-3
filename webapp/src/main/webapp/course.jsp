@@ -4,7 +4,6 @@
 <html>
 <head>
     <title>Dashboard | Learners Academy</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <style>
@@ -15,14 +14,13 @@
 
 </style>
 
-<body style="background-color: darkgray">
-
+<body style="background-color: ghostwhite">
+<jsp:include page="header.jsp"/>
 <div>
     <div class="container">
-        <h3 class="text-center">Classes</h3>
-        <hr>
         <div class="container text-left">
-            <a href="${requestScope['javax.servlet.forward.request_uri']}/add" class="btn btn-success">Add New
+            <a href="${requestScope['javax.servlet.forward.request_uri']}/add" class="btn btn-success"
+               style="background-color: coral">Add New
                 Class</a>
         </div>
         <br>
@@ -32,10 +30,8 @@
                 <th>ID</th>
                 <th>Title</th>
                 <th>Description</th>
-                <th>Subject Title</th>
-                <th>Subject Description</th>
-                <th>Teacher First Name</th>
-                <th>Teacher Last Name</th>
+                <th>Subject</th>
+                <th>Teacher</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -46,9 +42,7 @@
                     <td><c:out value="${enrollmentItem.title}"/></td>
                     <td><c:out value="${enrollmentItem.description}"/></td>
                     <td><c:out value="${enrollmentItem.subject.title}"/></td>
-                    <td><c:out value="${enrollmentItem.subject.description}"/></td>
-                    <td><c:out value="${enrollmentItem.teacher.firstName}"/></td>
-                    <td><c:out value="${enrollmentItem.teacher.lastName}"/></td>
+                    <td><c:out value="${enrollmentItem.teacher.firstName} ${enrollmentItem.teacher.lastName}"/></td>
                     <td>
                         <div style="float:left;">
                             <form method="post" action="${requestScope['javax.servlet.forward.request_uri']}/edit">

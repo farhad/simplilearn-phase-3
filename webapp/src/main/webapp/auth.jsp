@@ -10,7 +10,7 @@
         }
     </style>
 </head>
-<body style="background-color: lightgray;">
+<body style="background-color: ghostwhite;">
 <center>
     <div style="margin-top: 50px;">
         <h2>Learners Academy | Authentication</h2>
@@ -28,7 +28,8 @@
                 </tr>
                 <tr>
                     <td colspan="4" style="text-align: center"><input type="submit" value="Sign in"
-                                                                      class="btn btn-success"></td>
+                                                                      class="btn btn-success"
+                                                                      style="background-color: coral"></td>
                 </tr>
             </table>
         </form>
