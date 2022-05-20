@@ -15,4 +15,8 @@ public class User {
     private String userName;
     private String password;
     private String assignedRole;
+
+    public String fullName() {
+        return firstName + " " + lastName;
+    }
 }

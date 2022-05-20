@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" session="true" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -14,15 +14,11 @@
 <center>
     <div style="margin-top: 50px;">
         <h2>Learners Academy | Authentication</h2>
-        <form action="auth" method="post">
+        <form action="${requestScope['javax.servlet.forward.request_uri']}/login" method="post">
             <table>
                 <tr>
-                    <%
-                        String populatedUsername = request.getAttribute("username") != null ? request.getAttribute("username").toString() : "";
-                    %>
                     <td>username:</td>
-                    <td><input type="text" name="username" placeholder="username" class="form-control" required
-                               value=<%= populatedUsername%>></td>
+                    <td><input type="text" name="username" placeholder="username" class="form-control" required></td>
                 </tr>
                 <tr>
                     <td>password:</td>
@@ -39,7 +35,7 @@
 
         <table>
             <tr>
-                <td><%= request.getAttribute("error_auth") != null ? request.getAttribute("error_auth") : "" %>
+                <td><%= request.getSession().getAttribute("auth_error") != null ? request.getSession().getAttribute("auth_error") : "" %>
                 </td>
             </tr>
         </table>

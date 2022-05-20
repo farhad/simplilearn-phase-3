@@ -50,9 +50,10 @@ public class UserDao implements IDao<User> {
             try (var connection = dataSourceConnector.connect()) {
                 var users = new ArrayList<User>();
                 var query = MessageFormat.format(
-                        "SELECT * FROM Users WHERE username = ''{0}'' AND password = ''{1}''",
+                        "SELECT * FROM Users WHERE username = ''{0}'' AND password = ''{1}'' ;",
                         params.get(USERNAME),
                         params.get(PASSWORD));
+
                 ResultSet resultSet = connection.createStatement().executeQuery(query);
                 while (resultSet.next()) {
                     users.add(User.builder()
@@ -61,7 +62,7 @@ public class UserDao implements IDao<User> {
                             .lastName(resultSet.getString(LAST_NAME))
                             .userName(resultSet.getString(USERNAME))
                             .password(resultSet.getString(PASSWORD))
-                            .assignedRole(resultSet.getString(resultSet.getString(ASSIGNED_ROLE))).build());
+                            .assignedRole(resultSet.getString(ASSIGNED_ROLE)).build());
                 }
 
                 return users;

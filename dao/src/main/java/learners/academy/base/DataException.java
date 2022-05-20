@@ -16,7 +16,7 @@ public class DataException extends Exception {
 
     public String getMessage() {
         if (exception instanceof SQLException) {
-            return "failed to perform database operation. please try again!";
+            return "failed to perform database operation. please try again! ---- " + exception.getMessage();
         }
 
         return exception.getLocalizedMessage();

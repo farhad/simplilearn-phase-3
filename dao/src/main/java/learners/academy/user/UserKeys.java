@@ -8,4 +8,6 @@ public interface UserKeys {
     String USERNAME = "username";
     String PASSWORD = "password";
     String ASSIGNED_ROLE = "assigned_role";
+
+    String SESSION_ID = "session_user_id";
 }
