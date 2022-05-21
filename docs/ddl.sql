@@ -75,3 +75,6 @@ create table Enrollments
         on update cascade
         on delete cascade
 );
+
+insert into Users (first_name, last_name, username, password, assigned_role)
+values ('SimpliLearn', 'Admin', 'admin', 'admin', 'admin');
