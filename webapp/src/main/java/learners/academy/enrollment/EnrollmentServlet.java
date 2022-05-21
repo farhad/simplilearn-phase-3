@@ -122,7 +122,7 @@ public class EnrollmentServlet extends HttpServlet {
         var viewState = enrollmentController.getList();
         req.setAttribute(ATTR_FETCH_ERROR, viewState.getErrorMessage());
         req.setAttribute(ATTR_ENROLLMENTS_LIST, viewState.getData());
-        resp.sendRedirect(req.getContextPath());
+        resp.sendRedirect(req.getContextPath() + "/enrollment");
     }
 
     private void displayEnrollmentsList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

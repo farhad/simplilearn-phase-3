@@ -122,7 +122,7 @@ public class CourseServlet extends HttpServlet {
         var listViewState = courseController.getList();
         req.setAttribute(ATTR_FETCH_ERROR, listViewState.getErrorMessage());
         req.setAttribute(ATTR_COURSES_LIST, listViewState.getData());
-        resp.sendRedirect(req.getContextPath());
+        resp.sendRedirect(req.getContextPath() + "/course");
     }
 
     private void displayCoursesList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

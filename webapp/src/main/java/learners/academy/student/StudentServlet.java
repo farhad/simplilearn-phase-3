@@ -99,7 +99,7 @@ public class StudentServlet extends HttpServlet {
         var listViewState = controller.getList();
         req.setAttribute(ATTR_FETCH_ERROR, listViewState.getErrorMessage());
         req.setAttribute(ATTR_STUDENTS_LIST, listViewState.getData());
-        resp.sendRedirect(req.getContextPath());
+        resp.sendRedirect(req.getContextPath() + "/student");
     }
 
     private void displayStudentsList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

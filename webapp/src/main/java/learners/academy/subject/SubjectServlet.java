@@ -98,7 +98,7 @@ public class SubjectServlet extends HttpServlet {
         var listViewState = controller.getList();
         req.setAttribute(ATTR_FETCH_ERROR, listViewState.getErrorMessage());
         req.setAttribute(ATTR_SUBJECTS_LIST, listViewState.getData());
-        resp.sendRedirect(req.getContextPath());
+        resp.sendRedirect(req.getContextPath() + "/subject");
     }
 
     private void displaySubjectsList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
