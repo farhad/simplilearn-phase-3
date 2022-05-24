@@ -27,11 +27,6 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
         </dependency>
@@ -41,6 +36,7 @@
             <artifactId>cdi-api</artifactId>
             <scope>provided</scope>
         </dependency>
+
     </dependencies>
 
 </project>

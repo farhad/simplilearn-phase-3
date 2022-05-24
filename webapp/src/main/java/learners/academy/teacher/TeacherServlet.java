@@ -81,7 +81,7 @@ public class TeacherServlet extends HttpServlet {
         var listViewState = controller.getList();
         req.setAttribute(ATTR_FETCH_ERROR, listViewState.getErrorMessage());
         req.setAttribute(ATTR_TEACHERS_LIST, listViewState.getData());
-        resp.sendRedirect(req.getContextPath());
+        resp.sendRedirect(req.getContextPath() + "/teacher");
     }
 
     private void saveTeacherAndUpdateTeachersList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
